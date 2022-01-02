@@ -1,11 +1,11 @@
 require './player'
 require './game'
 
-winner = 0
+winner = nil
 game = Game.new
 
 # Game loop
-while winner.zero?
+while !winner
   puts game.new_problem
   answer = $stdin.gets.chomp
 

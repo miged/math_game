@@ -1,8 +1,7 @@
 class Game
   def initialize
-    @player1 = Player.new
-    @player2 = Player.new
-    @current_player = 1
+    @players = [Player.new, Player.new]
+    @current_player = 0
   end
 
   def new_problem
@@ -14,56 +13,46 @@ class Game
   end
 
   def evaluate(answer)
-    message = ""
     if @answer == answer.to_i
-      message = "Player #{@current_player}: Correct!"
+      message = "Player #{@current_player + 1}: Correct!"
     else
-      message = "Player #{@current_player}: Wrong!"
+      message = "Player #{@current_player + 1}: Wrong!"
       lose_life
     end
 
-    if @current_player == 1
-      @current_player = 2
-    else
+    if @current_player == 0
       @current_player = 1
+    else
+      @current_player = 0
     end
 
     message
   end
 
   def lose_life
-    if @current_player == 1
-      @player1.lives -= 1
-    else
-      @player2.lives -= 1
-    end
+    @players[@current_player].lives -= 1
   end
 
   def winner
-    if @player2.lives == 0
-      1
-    elsif @player1.lives == 0
-      2
-    else
+    if @players[1].lives == 0
       0
+    elsif @players[0].lives == 0
+      1
+    else
+      nil
     end
   end
 
   def display_score
-    "P1: #{@player1.to_s} vs P2: #{@player2.to_s}"
+    "P1: #{@players[0].to_s} vs P2: #{@players[1].to_s}"
   end
 
   def display_problem
-    "Player #{@current_player}: What does #{@num1} + #{@num2} equal?"
+    "Player #{@current_player + 1}: What does #{@num1} + #{@num2} equal?"
   end
 
   def display_winner(winner)
-    if winner == 1
-      lives = @player1.to_s
-    else winner == 2
-      lives = @player2.to_s
-    end
-
-    "Player #{winner} wins with a score of #{lives}\n--- GAME OVER ---"
+    lives = @players[winner].to_s
+    "Player #{winner + 1} wins with a score of #{lives}\n--- GAME OVER ---"
   end
 end
