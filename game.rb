@@ -9,7 +9,7 @@ class Game
     @num2 = rand(1..20)
     @answer = @num1 + @num2
 
-    display_problem
+    output_problem
   end
 
   def evaluate(answer)
@@ -20,13 +20,13 @@ class Game
       lose_life
     end
 
-    if @current_player == 0
+    if @current_player.zero?
       @current_player = 1
     else
       @current_player = 0
     end
 
-    message
+    message + output_score
   end
 
   def lose_life
@@ -34,25 +34,27 @@ class Game
   end
 
   def winner
-    if @players[1].lives == 0
+    if @players[1].lives.zero?
       0
-    elsif @players[0].lives == 0
+    elsif @players[0].lives.zero?
       1
-    else
-      nil
     end
   end
 
-  def display_score
-    "P1: #{@players[0].to_s} vs P2: #{@players[1].to_s}"
+  def output_score
+    "\nP1: #{@players[0]} vs P2: #{@players[1]}"
   end
 
-  def display_problem
+  def output_problem
     "Player #{@current_player + 1}: What does #{@num1} + #{@num2} equal?"
   end
 
-  def display_winner(winner)
+  def output_winner
     lives = @players[winner].to_s
     "Player #{winner + 1} wins with a score of #{lives}\n--- GAME OVER ---"
+  end
+
+  def output_new_turn
+    "--- NEW TURN ---"
   end
 end

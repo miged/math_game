@@ -1,18 +1,17 @@
 require './player'
 require './game'
 
-winner = nil
 game = Game.new
 
 # Game loop
-while !winner
+until game.winner
   puts game.new_problem
   answer = $stdin.gets.chomp
-
   puts game.evaluate(answer)
-  puts game.display_score
 
-  winner = game.winner
+  if !game.winner
+    puts game.output_new_turn
+  end
 end
 
-puts game.display_winner(winner)
+puts game.output_winner
