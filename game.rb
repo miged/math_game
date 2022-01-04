@@ -17,7 +17,7 @@ class Game
       message = "Player #{@current_player + 1}: Correct!"
     else
       message = "Player #{@current_player + 1}: Wrong!"
-      lose_life
+      @players[@current_player].lives -= 1
     end
 
     if @current_player.zero?
@@ -27,10 +27,6 @@ class Game
     end
 
     message + output_score
-  end
-
-  def lose_life
-    @players[@current_player].lives -= 1
   end
 
   def winner
